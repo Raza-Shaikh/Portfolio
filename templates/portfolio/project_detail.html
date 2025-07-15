@@ -1,0 +1,159 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}{{ project.title }} - Portfolio{% endblock %}
+
+{% block content %}
+<section class="section">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 mx-auto">
+                <!-- Back button -->
+                <div class="mb-4">
+                    <a href="{% url 'portfolio:projects' %}" class="btn btn-outline-secondary">
+                        <i class="fas fa-arrow-left"></i> Back to Projects
+                    </a>
+                </div>
+                
+                <!-- Project header -->
+                <div class="text-center mb-5">
+                    <h1 class="display-4">{{ project.title }}</h1>
+                    {% if project.featured %}
+                    <span class="badge bg-primary fs-6 mb-3">Featured Project</span>
+                    {% endif %}
+                    <p class="lead">{{ project.short_description }}</p>
+                </div>
+                
+                <!-- Project image -->
+                {% if project.image %}
+                <div class="text-center mb-5">
+                    <img src="{{ project.image.url }}" alt="{{ project.title }}" class="img-fluid rounded shadow">
+                </div>
+                {% endif %}
+                
+                <!-- Project details -->
+                <div class="row mb-5">
+                    <div class="col-md-8">
+                        <h3>About This Project</h3>
+                        <div class="project-description">
+                            {{ project.description|linebreaks }}
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="project-meta">
+                            <h4>Project Details</h4>
+                            
+                            <div class="mb-3">
+                                <strong>Completed:</strong><br>
+                                {{ project.completed_date|date:"F Y" }}
+                            </div>
+                            
+                            {% if project.technologies.all %}
+                            <div class="mb-3">
+                                <strong>Technologies:</strong><br>
+                                <div class="project-tech mt-2">
+                                    {% for tech in project.technologies.all %}
+                                    <span class="tech-badge">{{ tech.name }}</span>
+                                    {% endfor %}
+                                </div>
+                            </div>
+                            {% endif %}
+                            
+                            <div class="project-links">
+                                {% if project.live_url %}
+                                <a href="{{ project.live_url }}" class="btn btn-primary btn-sm d-block mb-2" target="_blank">
+                                    <i class="fas fa-external-link-alt"></i> View Live Site
+                                </a>
+                                {% endif %}
+                                {% if project.github_url %}
+                                <a href="{{ project.github_url }}" class="btn btn-outline-secondary btn-sm d-block" target="_blank">
+                                    <i class="fab fa-github"></i> View Source Code
+                                </a>
+                                {% endif %}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Navigation to other projects -->
+                <div class="row">
+                    <div class="col-12">
+                        <hr>
+                        <div class="d-flex justify-content-between align-items-center">
+                            <div>
+                                {% with previous_project=project.get_previous_by_completed_date %}
+                                {% if previous_project %}
+                                <a href="{{ previous_project.get_absolute_url }}" class="btn btn-outline-primary">
+                                    <i class="fas fa-chevron-left"></i> {{ previous_project.title }}
+                                </a>
+                                {% endif %}
+                                {% endwith %}
+                            </div>
+                            <div>
+                                <a href="{% url 'portfolio:projects' %}" class="btn btn-primary">All Projects</a>
+                            </div>
+                            <div>
+                                {% with next_project=project.get_next_by_completed_date %}
+                                {% if next_project %}
+                                <a href="{{ next_project.get_absolute_url }}" class="btn btn-outline-primary">
+                                    {{ next_project.title }} <i class="fas fa-chevron-right"></i>
+                                </a>
+                                {% endif %}
+                                {% endwith %}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Call to Action -->
+<section class="section bg-light">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 mx-auto text-center">
+                <h2>Interested in Similar Work?</h2>
+                <p class="lead">Let's discuss how I can help bring your project to life.</p>
+                <a href="{% url 'portfolio:contact' %}" class="btn btn-primary btn-lg">Start a Project</a>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}
+
+{% block extra_css %}
+<style>
+.project-description {
+    font-size: 1.1rem;
+    line-height: 1.8;
+}
+
+.project-meta {
+    background-color: #f8f9fa;
+    padding: 1.5rem;
+    border-radius: 8px;
+    position: sticky;
+    top: 100px;
+}
+
+.project-meta h4 {
+    color: #495057;
+    margin-bottom: 1rem;
+    border-bottom: 2px solid #dee2e6;
+    padding-bottom: 0.5rem;
+}
+
+.project-links .btn {
+    width: 100%;
+}
+
+@media (max-width: 768px) {
+    .project-meta {
+        position: static;
+        margin-top: 2rem;
+    }
+}
+</style>
+{% endblock %}

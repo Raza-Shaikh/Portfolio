@@ -1,0 +1,180 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}About - Portfolio{% endblock %}
+
+{% block content %}
+<section class="section">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 mx-auto">
+                <h1 class="section-title">About Me</h1>
+                
+                <div class="row mb-5">
+                    <div class="col-md-4 text-center mb-4">
+                        <div class="profile-image-about">
+                            <img src="{% static 'images/profile.jpg' %}" alt="Mohd Raza Amin Shaikh" class="img-fluid rounded-circle shadow" style="width: 220px; height: 220px; object-fit: cover; border: 3px solid var(--primary-color);">
+                        </div>
+                    </div>
+                    <div class="col-md-8">
+                        <h3>Hello! I'm Mohd Raza Amin Shaikh</h3>
+                        <p class="lead">A passionate Python/Django developer based in Mumbai, specializing in building robust web applications and backend systems.</p>
+                        <p>My journey in web development began with a curiosity for creating digital solutions that make a difference. I discovered my passion for Python and Django through their elegant syntax and powerful capabilities for rapid development. What started as exploring simple scripts has evolved into building complex, scalable web applications.</p>
+                        <p>Today, I focus on creating efficient, maintainable code while staying updated with the latest technologies and best practices. I enjoy tackling challenging problems and turning ideas into functional, user-friendly applications that deliver real value.</p>
+                        <p>Here are a few technologies I've been working with recently:</p>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <ul class="list-unstyled">
+                                    <li><i class="fas fa-chevron-right text-primary"></i> Python & Django</li>
+                                    <li><i class="fas fa-chevron-right text-primary"></i> Flask & FastAPI</li>
+                                    <li><i class="fas fa-chevron-right text-primary"></i> JavaScript (ES6+)</li>
+                                </ul>
+                            </div>
+                            <div class="col-md-6">
+                                <ul class="list-unstyled">
+                                    <li><i class="fas fa-chevron-right text-primary"></i> PostgreSQL & MySQL</li>
+                                    <li><i class="fas fa-chevron-right text-primary"></i> Scikit-learn & NLP</li>
+                                    <li><i class="fas fa-chevron-right text-primary"></i> Git & Docker</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Experience Section -->
+{% if experiences %}
+<section class="section bg-light">
+    <div class="container">
+        <h2 class="section-title">Experience</h2>
+        <div class="row">
+            <div class="col-lg-8 mx-auto">
+                <div class="timeline">
+                    {% for experience in experiences %}
+                    <div class="timeline-item">
+                        <div class="card">
+                            <div class="card-body">
+                                <h5 class="card-title">{{ experience.position }}</h5>
+                                <h6 class="card-subtitle mb-2 text-muted">
+                                    {% if experience.company_url %}
+                                    <a href="{{ experience.company_url }}" target="_blank">{{ experience.company }}</a>
+                                    {% else %}
+                                    {{ experience.company }}
+                                    {% endif %}
+                                    {% if experience.location %} • {{ experience.location }}{% endif %}
+                                </h6>
+                                <p class="text-muted small">
+                                    {{ experience.start_date|date:"M Y" }} - 
+                                    {% if experience.end_date %}{{ experience.end_date|date:"M Y" }}{% else %}Present{% endif %}
+                                </p>
+                                <p class="card-text">{{ experience.description|linebreaks }}</p>
+                            </div>
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+{% endif %}
+
+<!-- Education Section -->
+{% if education %}
+<section class="section">
+    <div class="container">
+        <h2 class="section-title">Education</h2>
+        <div class="row">
+            <div class="col-lg-8 mx-auto">
+                <div class="timeline">
+                    {% for edu in education %}
+                    <div class="timeline-item">
+                        <div class="card">
+                            <div class="card-body">
+                                <h5 class="card-title">{{ edu.degree }}</h5>
+                                {% if edu.field_of_study %}
+                                <h6 class="card-subtitle mb-2 text-muted">{{ edu.field_of_study }}</h6>
+                                {% endif %}
+                                <h6 class="card-subtitle mb-2 text-muted">{{ edu.institution }}</h6>
+                                <p class="text-muted small">
+                                    {{ edu.start_date|date:"Y" }} - 
+                                    {% if edu.end_date %}{{ edu.end_date|date:"Y" }}{% else %}Present{% endif %}
+                                    {% if edu.gpa %} • GPA: {{ edu.gpa }}{% endif %}
+                                </p>
+                                {% if edu.description %}
+                                <p class="card-text">{{ edu.description|linebreaks }}</p>
+                                {% endif %}
+                            </div>
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+{% endif %}
+
+<!-- Skills Section -->
+<section class="section bg-light">
+    <div class="container">
+        <h2 class="section-title">Skills & Expertise</h2>
+        <div class="row">
+            {% regroup skills by category as skill_groups %}
+            {% for group in skill_groups %}
+            <div class="col-lg-3 col-md-6 mb-4">
+                <div class="card h-100">
+                    <div class="card-body">
+                        <h5 class="card-title">{{ group.grouper|title }}</h5>
+                        {% for skill in group.list %}
+                        <div class="skill-item">
+                            <div class="d-flex justify-content-between align-items-center">
+                                <span class="skill-name">
+                                    {% if skill.icon %}
+                                    <i class="{{ skill.icon }}"></i>
+                                    {% endif %}
+                                    {{ skill.name }}
+                                </span>
+                                <span class="text-muted small">{{ skill.proficiency }}%</span>
+                            </div>
+                            <div class="skill-bar">
+                                <div class="skill-progress" style="width: {{ skill.proficiency }}%"></div>
+                            </div>
+                        </div>
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</section>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+// Animate skill bars on scroll
+document.addEventListener('DOMContentLoaded', function() {
+    const skillBars = document.querySelectorAll('.skill-progress');
+    
+    const animateSkills = () => {
+        skillBars.forEach(bar => {
+            const rect = bar.getBoundingClientRect();
+            if (rect.top < window.innerHeight && rect.bottom > 0) {
+                const width = bar.style.width;
+                bar.style.width = '0%';
+                setTimeout(() => {
+                    bar.style.width = width;
+                }, 100);
+            }
+        });
+    };
+    
+    window.addEventListener('scroll', animateSkills);
+    animateSkills(); // Run once on load
+});
+</script>
+{% endblock %}

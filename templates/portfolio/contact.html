@@ -1,0 +1,200 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Contact - Portfolio{% endblock %}
+
+{% block content %}
+<section class="section">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 mx-auto">
+                <h1 class="section-title">Get In Touch</h1>
+                <p class="text-center lead mb-5">I'm always interested in hearing about new opportunities and projects. Let's start a conversation!</p>
+                
+                <div class="row">
+                    <div class="col-md-8">
+                        <div class="contact-form">
+                            <form method="post" id="contactForm">
+                                {% csrf_token %}
+                                <div class="row">
+                                    <div class="col-md-6 mb-3">
+                                        <label for="{{ form.name.id_for_label }}" class="form-label">Name *</label>
+                                        {{ form.name }}
+                                        {% if form.name.errors %}
+                                        <div class="text-danger small">
+                                            {% for error in form.name.errors %}
+                                            <div>{{ error }}</div>
+                                            {% endfor %}
+                                        </div>
+                                        {% endif %}
+                                    </div>
+                                    <div class="col-md-6 mb-3">
+                                        <label for="{{ form.email.id_for_label }}" class="form-label">Email *</label>
+                                        {{ form.email }}
+                                        {% if form.email.errors %}
+                                        <div class="text-danger small">
+                                            {% for error in form.email.errors %}
+                                            <div>{{ error }}</div>
+                                            {% endfor %}
+                                        </div>
+                                        {% endif %}
+                                    </div>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="{{ form.subject.id_for_label }}" class="form-label">Subject *</label>
+                                    {{ form.subject }}
+                                    {% if form.subject.errors %}
+                                    <div class="text-danger small">
+                                        {% for error in form.subject.errors %}
+                                        <div>{{ error }}</div>
+                                        {% endfor %}
+                                    </div>
+                                    {% endif %}
+                                </div>
+                                <div class="mb-3">
+                                    <label for="{{ form.message.id_for_label }}" class="form-label">Message *</label>
+                                    {{ form.message }}
+                                    {% if form.message.errors %}
+                                    <div class="text-danger small">
+                                        {% for error in form.message.errors %}
+                                        <div>{{ error }}</div>
+                                        {% endfor %}
+                                    </div>
+                                    {% endif %}
+                                </div>
+                                <button type="submit" class="btn btn-primary btn-lg" id="submitBtn">
+                                    <span class="btn-text">Send Message</span>
+                                    <span class="loading d-none"></span>
+                                </button>
+                            </form>
+                        </div>
+                    </div>
+                    
+                    <div class="col-md-4">
+                        <div class="contact-info">
+                            <h4 class="mb-4">Let's Connect</h4>
+                            
+                            <div class="contact-item mb-3">
+                                <i class="fas fa-phone text-primary me-3"></i>
+                                <div>
+                                    <strong>Phone</strong><br>
+                                    <a href="tel:+918108426690">+91 8108426690</a>
+                                </div>
+                            </div>
+
+                            <div class="contact-item mb-3">
+                                <i class="fas fa-envelope text-primary me-3"></i>
+                                <div>
+                                    <strong>Email</strong><br>
+                                    <a href="mailto:raza.shaikh.work@gmail.com">raza.shaikh.work@gmail.com</a>
+                                </div>
+                            </div>
+
+                            <div class="contact-item mb-3">
+                                <i class="fas fa-map-marker-alt text-primary me-3"></i>
+                                <div>
+                                    <strong>Location</strong><br>
+                                    Mumbai, India
+                                </div>
+                            </div>
+                            
+                            <div class="contact-item mb-4">
+                                <i class="fas fa-clock text-primary me-3"></i>
+                                <div>
+                                    <strong>Response Time</strong><br>
+                                    Usually within 24 hours
+                                </div>
+                            </div>
+                            
+                            <div class="social-links">
+                                <h5 class="mb-3">Follow Me</h5>
+                                <a href="https://github.com/Raza-Shaikh" class="btn btn-outline-primary btn-sm me-2 mb-2" target="_blank">
+                                    <i class="fab fa-github"></i> GitHub
+                                </a>
+                                <a href="https://www.linkedin.com/in/raza-shaikh-962b48279/" class="btn btn-outline-primary btn-sm me-2 mb-2" target="_blank">
+                                    <i class="fab fa-linkedin"></i> LinkedIn
+                                </a>
+                                <a href="https://x.com/Dank_raza?t=Z-LzpqBPHhwTZMNNCvNNaA&s=08" class="btn btn-outline-primary btn-sm me-2 mb-2" target="_blank">
+                                    <i class="fab fa-twitter"></i> Twitter
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- FAQ Section -->
+<section class="section bg-light">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 mx-auto">
+                <h2 class="section-title">Frequently Asked Questions</h2>
+                
+                <div class="accordion" id="faqAccordion">
+                    <div class="accordion-item">
+                        <h2 class="accordion-header" id="faq1">
+                            <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapse1">
+                                What services do you offer?
+                            </button>
+                        </h2>
+                        <div id="collapse1" class="accordion-collapse collapse show" data-bs-parent="#faqAccordion">
+                            <div class="accordion-body">
+                                I specialize in full-stack web development, including frontend development with React/Vue.js, backend development with Django/Python, database design, and deployment services.
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="accordion-item">
+                        <h2 class="accordion-header" id="faq2">
+                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapse2">
+                                What's your typical project timeline?
+                            </button>
+                        </h2>
+                        <div id="collapse2" class="accordion-collapse collapse" data-bs-parent="#faqAccordion">
+                            <div class="accordion-body">
+                                Project timelines vary depending on complexity and requirements. A simple website might take 2-4 weeks, while a complex web application could take 2-6 months. I'll provide a detailed timeline after discussing your specific needs.
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="accordion-item">
+                        <h2 class="accordion-header" id="faq3">
+                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapse3">
+                                Do you work with remote clients?
+                            </button>
+                        </h2>
+                        <div id="collapse3" class="accordion-collapse collapse" data-bs-parent="#faqAccordion">
+                            <div class="accordion-body">
+                                Yes! I work with clients worldwide and am comfortable with remote collaboration using tools like Slack, Zoom, and project management platforms.
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const form = document.getElementById('contactForm');
+    const submitBtn = document.getElementById('submitBtn');
+    const btnText = submitBtn.querySelector('.btn-text');
+    const loading = submitBtn.querySelector('.loading');
+    
+    form.addEventListener('submit', function(e) {
+        // Show loading state
+        submitBtn.disabled = true;
+        btnText.classList.add('d-none');
+        loading.classList.remove('d-none');
+        
+        // Form will submit normally, this just provides visual feedback
+    });
+});
+</script>
+{% endblock %}
