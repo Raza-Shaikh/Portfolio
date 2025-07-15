@@ -107,17 +107,18 @@ document.addEventListener('DOMContentLoaded', function() {
     // Add loading states to buttons
     const buttons = document.querySelectorAll('button[type="submit"]');
     buttons.forEach(button => {
-        button.addEventListener('click', function() {
+        button.addEventListener('click', function(e) {
             if (this.form && this.form.checkValidity()) {
-                this.disabled = true;
+                // Don't prevent default - let form submit normally
                 const originalText = this.innerHTML;
                 this.innerHTML = '<span class="loading"></span> Processing...';
-                
-                // Re-enable after 5 seconds as fallback
+                this.disabled = true;
+
+                // Re-enable after 10 seconds as fallback (in case of errors)
                 setTimeout(() => {
                     this.disabled = false;
                     this.innerHTML = originalText;
-                }, 5000);
+                }, 10000);
             }
         });
     });

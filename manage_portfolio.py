@@ -84,13 +84,33 @@ def list_skills():
     """List all skills by category"""
     print("\n=== Your Skills ===")
     categories = ['backend', 'frontend', 'database', 'tools', 'other']
-    
+
     for category in categories:
         skills = Skill.objects.filter(category=category)
         if skills:
             print(f"\n{category.upper()}:")
             for skill in skills:
                 print(f"  • {skill.name} ({skill.proficiency}%)")
+
+def clean_empty_skills():
+    """Remove empty or invalid skills"""
+    print("\n=== Cleaning Empty Skills ===")
+    empty_skills = Skill.objects.filter(name__isnull=True) | Skill.objects.filter(name__exact='') | Skill.objects.filter(name__exact=' ')
+
+    if empty_skills.exists():
+        print(f"Found {empty_skills.count()} empty skill(s):")
+        for skill in empty_skills:
+            print(f"  • ID: {skill.id}, Name: '{skill.name}', Category: {skill.category}")
+
+        confirm = input("Delete these empty skills? (y/n): ").lower()
+        if confirm == 'y':
+            count = empty_skills.count()
+            empty_skills.delete()
+            print(f"✅ Deleted {count} empty skill(s)")
+        else:
+            print("❌ Cancelled")
+    else:
+        print("✅ No empty skills found")
 
 def main():
     """Main menu"""
@@ -102,11 +122,12 @@ def main():
         print("2. Add new project")
         print("3. List all projects")
         print("4. List all skills")
-        print("5. Exit")
+        print("5. Clean empty skills")
+        print("6. Exit")
         print("-"*50)
-        
-        choice = input("Choose an option (1-5): ")
-        
+
+        choice = input("Choose an option (1-6): ")
+
         if choice == '1':
             add_skill()
         elif choice == '2':
@@ -116,6 +137,8 @@ def main():
         elif choice == '4':
             list_skills()
         elif choice == '5':
+            clean_empty_skills()
+        elif choice == '6':
             print("👋 Goodbye!")
             break
         else:
