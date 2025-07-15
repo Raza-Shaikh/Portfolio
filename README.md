@@ -20,18 +20,6 @@ A professional, responsive portfolio website built with Django showcasing my ski
 - **Icons**: Font Awesome 6
 - **Fonts**: Google Fonts (Inter)
 
-## Featured Projects
-
-### 1. Plagiarism Checker
-- **Tech Stack**: Python, Flask, Scikit-learn, HTML/CSS
-- **Features**: Multi-format file support (.txt, .docx, .pdf), TF-IDF + Cosine Similarity, NLP processing
-- **GitHub**: https://github.com/Raza-Shaikh/Plagiarism-Checker
-
-### 2. E-commerce Store
-- **Tech Stack**: Python, Django, HTML/CSS, JavaScript, Bootstrap
-- **Features**: User authentication, product catalog, shopping cart, order management
-- **GitHub**: https://github.com/Raza-Shaikh/e-commerce-store
-
 ## Installation & Setup
 
 1. **Clone the repository**
